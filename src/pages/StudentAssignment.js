@@ -31,24 +31,27 @@ const StudentAssignment = () => {
         setSelectedType(type);
     };
 
-    const handleUnsubscribe = (_id) => {
-        store.unsubscribeStudent(_id, selectedStudent._id)
-        setSelectedType(listGroupSelection.AVAILABLE_COURSES)
-    }
-
-    const handleSubscribe = (_id) => {
-        store.subscribeStudent(_id, selectedStudent._id)
-        setSelectedType(listGroupSelection.MY_COURSES)
-    }
-
-    const filteredCourses =
-        selectedStudent && selectedStudent._id && selectedType === listGroupSelection.MY_COURSES
+    const filteredCourses = () => {
+        console.log('fill');
+        return selectedStudent && selectedStudent._id && selectedType === listGroupSelection.MY_COURSES
             ? store.courses.filter((m) => (
                 m.listOfStudents.some(student => student._id === selectedStudent._id))) :
             selectedStudent._id && selectedType === listGroupSelection.AVAILABLE_COURSES
                 ? store.courses.filter((m) => (
                     m.listOfStudents.every(student => student._id !== selectedStudent._id))) :
                 store.courses;
+
+    }
+
+
+    const handleUnsubscribe = (_id) => {
+        store.unsubscribeStudent(_id, selectedStudent._id)
+    }
+
+    const handleSubscribe = (_id) => {
+        store.subscribeStudent(_id, selectedStudent._id)
+    }
+
 
 
     return useObserver(() => (
@@ -69,7 +72,7 @@ const StudentAssignment = () => {
             />
             <StudentTable
                 selectedItem={selectedType} onUnsubscribe={handleUnsubscribe} onSubscribe={handleSubscribe}
-                courses={filteredCourses}
+                courses={filteredCourses()}
 
             />
         </>

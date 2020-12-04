@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { useLocalStore, useObserver } from "mobx-react";
+import React, { useState, useEffect } from "react";
+import { useObserver } from "mobx-react";
 
 import Select from "../components/select";
 
@@ -7,18 +7,13 @@ import { useStore } from "../context/context";
 
 import ListGroup from "../components/listGroup";
 import StudentTable from "../components/studentTable";
-import listGroupSelection from "../utils/constants"
+import listGroupSelection from "../constants/constants"
+import students from '../constants/students'
 
 const StudentAssignment = () => {
     const store = useStore();
-
     const [selectedStudent, setSelectedStudent] = useState({});
-    const [students, setStudents] = useState([]);
     const [selectedType, setSelectedType] = useState(listGroupSelection.MY_COURSES);
-
-    useEffect(() => {
-        setStudents(store.students);
-    }, []);
 
 
     const handleChange = ({ currentTarget: input }) => {
@@ -40,9 +35,7 @@ const StudentAssignment = () => {
                 ? store.courses.filter((m) => (
                     m.listOfStudents.every(student => student._id !== selectedStudent._id))) :
                 store.courses;
-
     }
-
 
     const handleUnsubscribe = (_id) => {
         store.unsubscribeStudent(_id, selectedStudent._id)
@@ -52,17 +45,14 @@ const StudentAssignment = () => {
         store.subscribeStudent(_id, selectedStudent._id)
     }
 
-
-
     return useObserver(() => (
         <>
             <form>
                 <Select
-                    name={students._id}
+                    name={'students'}
                     options={students}
-                    value={students[students._id]}
                     onChange={handleChange}
-                    label={'Students'}
+                    label={'students'}
                 />
             </form>
             <ListGroup
@@ -73,7 +63,6 @@ const StudentAssignment = () => {
             <StudentTable
                 selectedItem={selectedType} onUnsubscribe={handleUnsubscribe} onSubscribe={handleSubscribe}
                 courses={filteredCourses()}
-
             />
         </>
     ));

@@ -2,6 +2,10 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useLocalStore, useObserver } from "mobx-react";
 
 import { useStore } from "../context/context";
+import days from '../constants/dates';
+import times from '../constants/times'
+import teachers from '../constants/teachers'
+
 
 
 const CourseForm = ({ setVisibleForm }) => {
@@ -12,18 +16,17 @@ const CourseForm = ({ setVisibleForm }) => {
         title: "",
         subject: "",
         teacherId: "",
-        timeId: ""
+        timeId: 0,
+        dateId: 0,
     });
 
-    const [teachers, setTeachers] = useState([]);
-    const [dates, setDates] = useState([]);
+    /* const [teachers, setTeachers] = useState([teachers]);
 
 
     useEffect(() => {
-        setTeachers(store.getTeachers);
-        setDates(store.dates)
+        setTeachers(teachers);
     }, []);
-
+ */
 
     function mapToViewModel(course) {
         return {
@@ -33,6 +36,7 @@ const CourseForm = ({ setVisibleForm }) => {
             teacherId: course.teacherId,
             listOfStudents: [],
             timeId: course.timeId,
+            dateId: course.dateId,
         };
     }
 
@@ -47,7 +51,6 @@ const CourseForm = ({ setVisibleForm }) => {
             onSubmit={e => {
                 e.preventDefault();
                 setCourse(mapToViewModel(course))
-                /* setCourse(mapToViewModel(course)); */
                 store.addCourse(course)
                 setVisibleForm(false)
             }}
@@ -89,10 +92,21 @@ const CourseForm = ({ setVisibleForm }) => {
                 </select>
             </div>
             <div className="form-group">
-                <label htmlFor='timeId'>Date</label>
+                <label htmlFor='dayId'>Days</label>
+                <select onChange={handleChange} name='dayId' id='dayId' className="form-control">
+                    <option value="" />
+                    {days.map(option => (
+                        <option key={option._id} value={option._id}>
+                            {option.day}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className="form-group">
+                <label htmlFor='timeId'>Time</label>
                 <select onChange={handleChange} name='timeId' id='timeId' className="form-control">
                     <option value="" />
-                    {dates.map(option => (
+                    {times.map(option => (
                         <option key={option._id} value={option._id}>
                             {option.time}
                         </option>
@@ -100,7 +114,7 @@ const CourseForm = ({ setVisibleForm }) => {
                 </select>
             </div>
 
-            <button /* disabled={this.validate()}  */ type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
                 Save
         </button>
 

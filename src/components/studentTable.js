@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import listGroupSelection from "../utils/constants"
+import listGroupSelection from "../constants/constants"
 
 /* import Like from "./common/like"; */
 

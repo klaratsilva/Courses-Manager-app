@@ -12,7 +12,7 @@ const CourseTable = ({ courses, onDelete }) => {
                     <th scope="col">Subject</th>
                     <th scope="col">Teacher</th>
                     <th scope="col">Num Students</th>
-                    <th scope="col">Date</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +23,7 @@ const CourseTable = ({ courses, onDelete }) => {
                         <td>{course.subject}</td>
                         <td>{course.teacher.lastName}</td>
                         <td>{course.listOfStudents.length}</td>
-                        <td>{course.date.time}</td>
+
 
                         {/*  <td>
                             <button className="btn btn-warning" type="button">

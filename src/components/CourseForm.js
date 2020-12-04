@@ -20,14 +20,6 @@ const CourseForm = ({ setVisibleForm }) => {
         dateId: 0,
     });
 
-    /* const [teachers, setTeachers] = useState([teachers]);
-
-
-    useEffect(() => {
-        setTeachers(teachers);
-    }, []);
- */
-
     function mapToViewModel(course) {
         return {
             _id: course._id,
